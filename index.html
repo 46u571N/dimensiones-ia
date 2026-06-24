@@ -1,0 +1,1706 @@
+<!doctype html>
+<html lang="es-AR" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Las dimensiones del producto IA — Spartan IT</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0E1620;
+    --surface: #15212E;
+    --surface-2: #1C2A3A;
+    --surface-3: #243447;
+    --line: #2C3E54;
+    --line-strong: #3F546F;
+    --text: #E8E4D9;
+    --text-2: #B5BFCC;
+    --text-3: #7C8A9C;
+    --amber: #E8A23A;
+    --amber-dim: #8C6224;
+    --cyan: #4FD1C5;
+    --danger: #E07856;
+    --ok: #7FB069;
+    --purple: #9B7BB8;
+    --grid-color: rgba(44,62,84,1);
+    --glow-color: rgba(232,162,58,0.08);
+    --mono: 'JetBrains Mono', ui-monospace, monospace;
+    --sans: 'Inter', system-ui, sans-serif;
+  }
+  [data-theme="light"] {
+    --bg: #F7F5EF;
+    --surface: #FFFFFF;
+    --surface-2: #F0EDE3;
+    --surface-3: #E5E0D2;
+    --line: #D8D2C2;
+    --line-strong: #B8AF98;
+    --text: #1A1F2E;
+    --text-2: #4A5468;
+    --text-3: #8A8676;
+    --amber: #B86F1F;
+    --amber-dim: #D89456;
+    --cyan: #2A8A82;
+    --danger: #B85540;
+    --ok: #5F7F3F;
+    --purple: #6B4A8C;
+    --grid-color: rgba(184,175,152,0.18);
+    --glow-color: rgba(184,111,31,0.06);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    background: var(--bg); color: var(--text);
+    font-family: var(--sans); font-size: 15px; line-height: 1.55;
+    transition: background 0.2s, color 0.2s;
+  }
+  body {
+    background-image:
+      linear-gradient(var(--grid-color) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+    background-size: 64px 64px;
+    background-position: -1px -1px;
+    background-attachment: fixed;
+    background-color: var(--bg);
+  }
+  body::before {
+    content: ''; position: fixed; inset: 0;
+    background: radial-gradient(ellipse at 50% -10%, var(--glow-color), transparent 60%);
+    pointer-events: none; z-index: 0;
+  }
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 32px; position: relative; z-index: 1; }
+
+  /* Header */
+  header { padding: 40px 0 24px; border-bottom: 1px solid var(--line); }
+  .top-row { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; }
+  .brand {
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--text-3); display: flex; align-items: center; gap: 12px;
+  }
+  .brand::before {
+    content: ''; width: 8px; height: 8px; background: var(--amber); border-radius: 50%;
+  }
+  [data-theme="dark"] .brand::before { box-shadow: 0 0 12px var(--amber); }
+  .theme-toggle {
+    background: none; border: 1px solid var(--line); color: var(--text-3);
+    padding: 8px 14px; font-family: var(--mono); font-size: 11px;
+    letter-spacing: 0.1em; cursor: pointer; border-radius: 2px;
+    text-transform: uppercase; transition: all 0.15s;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .theme-toggle:hover { color: var(--text); border-color: var(--text-3); }
+  .theme-toggle::before { content: '◐'; font-size: 14px; }
+
+  h1 {
+    font-family: var(--mono); font-weight: 700; font-size: clamp(32px, 5.5vw, 56px);
+    line-height: 1.02; letter-spacing: -0.03em; margin-top: 16px;
+  }
+  h1 .accent { color: var(--amber); }
+  .subtitle { margin-top: 20px; max-width: 740px; color: var(--text-2); font-size: 17px; line-height: 1.5; }
+  .thesis {
+    margin-top: 24px; padding: 16px 20px; background: var(--surface-2);
+    border-left: 3px solid var(--cyan); border-radius: 0 3px 3px 0;
+    font-family: var(--mono); font-size: 13px; color: var(--text); max-width: 740px;
+  }
+  .thesis b { color: var(--cyan); }
+
+  /* Tabs */
+  .tabs {
+    display: flex; gap: 0; border-bottom: 1px solid var(--line);
+    margin-top: 32px; position: sticky; top: 0; background: var(--bg); z-index: 10;
+    overflow-x: auto;
+  }
+  [data-theme="light"] .tabs { box-shadow: 0 4px 16px -8px rgba(26,31,46,0.08); }
+  .tab {
+    background: none; border: none; color: var(--text-3); padding: 18px 20px;
+    font-family: var(--mono); font-size: 13px; font-weight: 500;
+    letter-spacing: 0.05em; cursor: pointer; position: relative;
+    transition: color 0.15s; white-space: nowrap;
+  }
+  .tab:hover { color: var(--text); }
+  .tab.active { color: var(--amber); }
+  .tab.active::after {
+    content: ''; position: absolute; left: 0; right: 0; bottom: -1px;
+    height: 2px; background: var(--amber);
+  }
+  .tab-num {
+    font-size: 10px; color: var(--text-3); margin-right: 8px;
+    border: 1px solid var(--line); padding: 2px 6px; border-radius: 2px;
+  }
+  .tab.active .tab-num { color: var(--amber); border-color: var(--amber-dim); }
+
+  /* Panels */
+  .panel { display: none; padding: 48px 0 80px; }
+  .panel.active { display: block; }
+
+  .eyebrow {
+    font-family: var(--mono); font-size: 11px; color: var(--amber);
+    letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 12px;
+  }
+  h2 {
+    font-family: var(--mono); font-weight: 700; font-size: 28px;
+    line-height: 1.15; letter-spacing: -0.01em; margin-bottom: 14px;
+  }
+  h3 {
+    font-family: var(--mono); font-weight: 600; font-size: 17px;
+    margin-bottom: 10px; color: var(--text);
+  }
+  p { color: var(--text-2); margin-bottom: 14px; }
+  p strong { color: var(--text); font-weight: 600; }
+  .lead { font-size: 17px; max-width: 800px; }
+
+  abbr.term {
+    text-decoration: none; border-bottom: 1px dotted var(--amber);
+    cursor: help; color: inherit;
+  }
+  abbr.term:hover { color: var(--amber); }
+
+  /* === STAGE GRID (4 phases side by side) === */
+  .stages-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 1px; background: var(--line); border: 1px solid var(--line);
+    margin: 32px 0 24px;
+  }
+  @media (max-width: 1000px) { .stages-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 600px) { .stages-grid { grid-template-columns: 1fr; } }
+
+  .stage {
+    background: var(--surface); padding: 22px 20px;
+    border-top: 2px solid transparent;
+  }
+  .stage[data-phase="0"] { border-top-color: var(--text-3); }
+  .stage[data-phase="1"] { border-top-color: var(--amber-dim); }
+  .stage[data-phase="2"] { border-top-color: var(--amber); }
+  .stage[data-phase="3"] { border-top-color: var(--cyan); }
+
+  .stage-head {
+    display: flex; align-items: baseline; justify-content: space-between;
+    margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1px solid var(--line);
+  }
+  .stage-num {
+    font-family: var(--mono); font-size: 11px; color: var(--text-3);
+    letter-spacing: 0.15em;
+  }
+  .stage[data-phase="0"] .stage-num { color: var(--text-3); }
+  .stage[data-phase="1"] .stage-num { color: var(--amber-dim); }
+  .stage[data-phase="2"] .stage-num { color: var(--amber); }
+  .stage[data-phase="3"] .stage-num { color: var(--cyan); }
+  .stage-tag {
+    font-family: var(--mono); font-size: 10px; color: var(--text-3);
+    text-transform: uppercase; letter-spacing: 0.1em;
+  }
+  .stage-title {
+    font-family: var(--mono); font-weight: 700; font-size: 14px;
+    margin-bottom: 10px; line-height: 1.2;
+  }
+  .stage-body { font-size: 13px; color: var(--text-2); line-height: 1.5; }
+  .stage-body p { margin-bottom: 8px; }
+  .stage-body ul { list-style: none; margin: 8px 0; padding: 0; }
+  .stage-body ul li {
+    padding: 3px 0 3px 14px; position: relative; font-size: 12.5px;
+  }
+  .stage-body ul li::before {
+    content: '›'; position: absolute; left: 0; color: var(--amber);
+  }
+  .stage-body code {
+    font-family: var(--mono); font-size: 11px; background: var(--bg);
+    padding: 1px 5px; border-radius: 2px; color: var(--amber);
+  }
+
+  /* === ASPECT TABLE === */
+  .aspects {
+    background: var(--surface); border: 1px solid var(--line);
+    border-radius: 4px; padding: 28px; margin: 32px 0;
+  }
+  .aspects h3 {
+    font-family: var(--mono); font-size: 13px; color: var(--amber);
+    letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 18px;
+  }
+  table.aspects-table {
+    width: 100%; border-collapse: collapse; font-size: 13px;
+  }
+  table.aspects-table th, table.aspects-table td {
+    padding: 12px 14px; text-align: left; vertical-align: top;
+    border-bottom: 1px solid var(--line);
+  }
+  table.aspects-table th {
+    font-family: var(--mono); font-size: 10px; color: var(--text-3);
+    letter-spacing: 0.15em; text-transform: uppercase; font-weight: 600;
+  }
+  table.aspects-table th:first-child { width: 22%; }
+  table.aspects-table td {
+    color: var(--text-2); line-height: 1.45;
+  }
+  table.aspects-table td:first-child {
+    color: var(--text); font-family: var(--mono); font-size: 12px;
+    font-weight: 500;
+  }
+  table.aspects-table tr:last-child td { border-bottom: none; }
+  table.aspects-table td code {
+    font-family: var(--mono); font-size: 11px; color: var(--amber);
+    background: var(--bg); padding: 1px 5px; border-radius: 2px;
+  }
+  @media (max-width: 760px) {
+    table.aspects-table, table.aspects-table tbody, table.aspects-table tr, table.aspects-table td, table.aspects-table th { display: block; }
+    table.aspects-table thead { display: none; }
+    table.aspects-table tr {
+      margin-bottom: 16px; padding-bottom: 14px;
+      border-bottom: 1px solid var(--line);
+    }
+    table.aspects-table td {
+      border: none; padding: 4px 0;
+    }
+    table.aspects-table td:first-child { font-weight: 700; margin-bottom: 4px; }
+    table.aspects-table td:not(:first-child)::before {
+      content: attr(data-phase) ' · ';
+      color: var(--amber); font-family: var(--mono); font-size: 10px;
+      letter-spacing: 0.1em; text-transform: uppercase;
+    }
+  }
+
+  /* === JUMP / Transition === */
+  .jumps {
+    margin-top: 32px; display: grid; gap: 12px;
+  }
+  .jump {
+    background: var(--surface); border: 1px solid var(--line);
+    padding: 18px 22px; border-radius: 3px;
+    display: grid; grid-template-columns: 110px 1fr;
+    gap: 20px; align-items: start;
+  }
+  @media (max-width: 600px) { .jump { grid-template-columns: 1fr; gap: 8px; } }
+  .jump-label {
+    font-family: var(--mono); font-size: 11px; color: var(--amber);
+    letter-spacing: 0.1em;
+  }
+  .jump-body { font-size: 14px; color: var(--text-2); }
+  .jump-body b { color: var(--text); }
+
+  /* === SPARTAN POSITION === */
+  .spartan-now {
+    margin-top: 36px; padding: 22px 26px;
+    background: var(--surface-2); border-left: 3px solid var(--purple);
+    border-radius: 0 3px 3px 0;
+  }
+  .spartan-now .eyebrow { color: var(--purple); margin-bottom: 8px; }
+  .spartan-now h3 { margin-bottom: 8px; }
+  .spartan-now p { font-size: 14px; margin-bottom: 0; color: var(--text-2); }
+
+  /* === CHECKLIST PANEL === */
+  .check-intro { margin-bottom: 36px; }
+  .check-legend {
+    display: flex; gap: 20px; flex-wrap: wrap; margin-top: 16px;
+    font-family: var(--mono); font-size: 11px; color: var(--text-3);
+  }
+  .check-legend .lk { display: flex; align-items: center; gap: 6px; }
+  .check-legend .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+  }
+  .dot-here { background: var(--ok); }
+  .dot-other { background: var(--cyan); }
+  .dot-future { background: var(--text-3); }
+
+  .check-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    gap: 1px; background: var(--line); border: 1px solid var(--line);
+  }
+  .check-item {
+    background: var(--surface); padding: 22px 24px; position: relative;
+  }
+  .check-num {
+    position: absolute; top: 16px; right: 18px;
+    font-family: var(--mono); font-size: 11px; color: var(--text-3);
+    letter-spacing: 0.1em;
+  }
+  .check-cat {
+    font-family: var(--mono); font-size: 10px; color: var(--text-3);
+    letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 6px;
+  }
+  .check-item h4 {
+    font-family: var(--mono); font-weight: 600; font-size: 15px;
+    margin-bottom: 8px; padding-right: 36px;
+  }
+  .check-item p {
+    font-size: 13px; color: var(--text-2); line-height: 1.5;
+    margin-bottom: 12px;
+  }
+  .check-status {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: var(--mono); font-size: 11px;
+    padding: 4px 10px; border-radius: 2px;
+    background: var(--surface-2);
+  }
+  .check-status .dot {
+    width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0;
+  }
+  .check-status.here { color: var(--ok); border: 1px solid rgba(127,176,105,0.3); }
+  .check-status.other { color: var(--cyan); border: 1px solid rgba(79,209,197,0.3); }
+  .check-status.future { color: var(--text-3); border: 1px solid var(--line-strong); }
+  .check-priority {
+    position: absolute; bottom: 22px; right: 24px;
+    font-family: var(--mono); font-size: 10px;
+    color: var(--text-3); letter-spacing: 0.1em;
+  }
+  .check-priority::before { content: '★ '; color: var(--amber); }
+
+  /* === DEPENDENCY GRAPH === */
+  .dep-section {
+    margin-top: 56px;
+  }
+  .dep-section h3 {
+    font-family: var(--mono); font-size: 20px; margin-bottom: 8px;
+  }
+  .dep-section > p { margin-bottom: 28px; max-width: 760px; }
+
+  .dep-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+    gap: 16px;
+  }
+  .dep-node {
+    background: var(--surface); border: 1px solid var(--line);
+    border-radius: 3px; padding: 18px 22px;
+    border-left: 3px solid var(--cyan);
+  }
+  .dep-head {
+    display: flex; align-items: baseline; gap: 10px; margin-bottom: 12px;
+  }
+  .dep-num {
+    font-family: var(--mono); font-size: 11px; color: var(--amber);
+    letter-spacing: 0.15em;
+  }
+  .dep-title {
+    font-family: var(--mono); font-weight: 600; font-size: 14px;
+  }
+  .dep-rel {
+    display: flex; gap: 8px; align-items: flex-start;
+    font-size: 13px; line-height: 1.5; margin-bottom: 8px;
+    color: var(--text-2);
+  }
+  .dep-rel:last-child { margin-bottom: 0; }
+  .dep-arrow {
+    font-family: var(--mono); font-size: 11px; color: var(--text-3);
+    flex-shrink: 0; padding-top: 2px;
+    letter-spacing: 0.05em; min-width: 76px;
+  }
+  .dep-rel.requires .dep-arrow { color: var(--danger); }
+  .dep-rel.enables .dep-arrow { color: var(--ok); }
+  .dep-rel b { color: var(--text); }
+
+  footer {
+    border-top: 1px solid var(--line); padding: 32px 0 60px;
+    font-family: var(--mono); font-size: 11px; color: var(--text-3);
+    letter-spacing: 0.05em;
+  }
+  footer .container { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+  footer .link-out { color: var(--amber); text-decoration: none; }
+  footer .link-out:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <div class="top-row">
+      <div class="brand">Spartan IT · arquitectura · dimensiones · v1.0</div>
+      <button class="theme-toggle" id="theme-toggle">Modo oscuro</button>
+    </div>
+    <h1>Tu producto madura<br>por <span class="accent">dimensiones</span>,<br>no en bloque.</h1>
+    <p class="subtitle">
+      Auth en fase 03, RAG en fase 01, billing en fase 02. <strong>Es completamente normal</strong>.
+      Esta es una guía para entender qué cambia en cada dimensión por separado, y cuándo conviene madurar cada una.
+    </p>
+    <div class="thesis">
+      <b>tesis</b> · pensar la madurez "del producto" como un número único (fase 1, 2, 3) lleva a errores.
+      el producto es un vector con muchas componentes — cada dimensión avanza a su propio ritmo
+      según el cliente, la regulación y la presión del negocio. acá desarmamos las cuatro críticas
+      para spartan, y catalogamos las nueve restantes.
+    </div>
+  </div>
+</header>
+
+<div class="container">
+  <nav class="tabs">
+    <button class="tab active" data-panel="datos"><span class="tab-num">01</span>Datos y conexión</button>
+    <button class="tab" data-panel="auth"><span class="tab-num">02</span>Auth y observabilidad</button>
+    <button class="tab" data-panel="rag"><span class="tab-num">03</span>RAG y embeddings</button>
+    <button class="tab" data-panel="compliance"><span class="tab-num">04</span>Cumplimiento normativo</button>
+    <button class="tab" data-panel="pricing"><span class="tab-num">05</span>Pricing</button>
+    <button class="tab" data-panel="evals"><span class="tab-num">06</span>Testing y evals</button>
+    <button class="tab" data-panel="checklist"><span class="tab-num">07</span>Las 14 dimensiones</button>
+  </nav>
+
+  <!-- ============ TAB 1: DATOS Y CONEXIÓN ============ -->
+  <section class="panel active" id="datos">
+    <div class="eyebrow">Dimensión 01</div>
+    <h2>Datos y conexión a base</h2>
+    <p class="lead">
+      Cómo el agente accede a los datos del cliente. Probablemente la dimensión más conflictiva
+      de Spartan, porque ningún cliente serio te va a dar acceso directo a su base productiva
+      — y eso obliga a diseñar capas intermedias desde el principio.
+    </p>
+
+    <div class="stages-grid">
+      <div class="stage" data-phase="0">
+        <div class="stage-head">
+          <span class="stage-num">FASE 00</span>
+          <span class="stage-tag">Explorar</span>
+        </div>
+        <div class="stage-title">No hay conexión a datos</div>
+        <div class="stage-body">
+          <p>Si necesitás datos reales, los pegás a mano en claude.ai. Toda la conexión vive en tu cabeza y tu portapapeles.</p>
+        </div>
+      </div>
+
+      <div class="stage" data-phase="1">
+        <div class="stage-head">
+          <span class="stage-num">FASE 01</span>
+          <span class="stage-tag">Conectar</span>
+        </div>
+        <div class="stage-title">Conexión directa a la base del cliente</div>
+        <div class="stage-body">
+          <p>Tu MCP server con credenciales hardcoded en variables de entorno. Conexión única, sin pool, sin retry sofisticado.</p>
+          <ul>
+            <li>Postgres / MySQL / SQL Server según lo que tenga el cliente</li>
+            <li>Credenciales en <code>.env</code> del MCP server</li>
+            <li>Una sola DB, vos sos el único usuario</li>
+            <li>El cliente probablemente te dio un usuario SQL de solo lectura</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="stage" data-phase="2">
+        <div class="stage-head">
+          <span class="stage-num">FASE 02</span>
+          <span class="stage-tag">Operar</span>
+        </div>
+        <div class="stage-title">Vistas, réplicas o API que el cliente expone</div>
+        <div class="stage-body">
+          <p>El cliente casi nunca te abre la DB completa. Te entrega vistas filtradas, una réplica en tu GCP, o una API REST que ellos exponen y vos consumís.</p>
+          <ul>
+            <li>Pool de conexiones (no abrir una por request)</li>
+            <li>Secretos en GCP Secret Manager, no en código</li>
+            <li>Capa de abstracción (repository pattern) entre la tool y la DB</li>
+            <li>Retry con backoff exponencial</li>
+            <li>Read replica si el volumen es alto</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="stage" data-phase="3">
+        <div class="stage-head">
+          <span class="stage-num">FASE 03</span>
+          <span class="stage-tag">Escalar</span>
+        </div>
+        <div class="stage-title">Una conexión por tenant, aislamiento estricto</div>
+        <div class="stage-body">
+          <p>Cada cliente tiene su propia conexión, su propio pool, sus propios secretos. El código resuelve qué conexión usar según el tenant activo en cada request.</p>
+          <ul>
+            <li><code>TenantContext</code> middleware en Laravel</li>
+            <li>Connection pool por cliente, configurado en runtime</li>
+            <li>Secretos por tenant en Vault o Secret Manager con namespaces</li>
+            <li>Row-level security donde sea posible</li>
+            <li>Backup y DR diferenciado por SLA del tenant</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="aspects">
+      <h3>› aspectos que cambian fase a fase</h3>
+      <table class="aspects-table">
+        <thead>
+          <tr>
+            <th>Aspecto</th>
+            <th>Fase 01</th>
+            <th>Fase 02</th>
+            <th>Fase 03</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Dónde viven las credenciales</td>
+            <td data-phase="01"><code>.env</code> en el host del MCP</td>
+            <td data-phase="02">GCP Secret Manager</td>
+            <td data-phase="03">Vault con namespace por tenant</td>
+          </tr>
+          <tr>
+            <td>Modelo de acceso</td>
+            <td data-phase="01">Usuario SQL único, read-only</td>
+            <td data-phase="02">Vistas filtradas, réplica, o API REST</td>
+            <td data-phase="03">Conexión resuelta dinámicamente por tenant</td>
+          </tr>
+          <tr>
+            <td>Pool de conexiones</td>
+            <td data-phase="01">Una conexión, sin pool</td>
+            <td data-phase="02">Pool fijo (Laravel default)</td>
+            <td data-phase="03">Pool por tenant con límites configurables</td>
+          </tr>
+          <tr>
+            <td>Manejo de errores</td>
+            <td data-phase="01">Excepción al usuario</td>
+            <td data-phase="02">Retry con backoff, fallback genérico</td>
+            <td data-phase="03">Circuit breaker, SLA degradado configurable</td>
+          </tr>
+          <tr>
+            <td>Aislamiento de datos</td>
+            <td data-phase="01">No aplica (vos sos el único)</td>
+            <td data-phase="02">No aplica (un cliente)</td>
+            <td data-phase="03">Crítico — fuga entre clientes es incidente grave</td>
+          </tr>
+          <tr>
+            <td>Backup y DR</td>
+            <td data-phase="01">Responsabilidad del cliente</td>
+            <td data-phase="02">Snapshots de la réplica que tenés</td>
+            <td data-phase="03">Política por SLA contractual del tenant</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 style="margin-top: 40px;">Próximos pasos al saltar de fase</h3>
+    <div class="jumps">
+      <div class="jump">
+        <span class="jump-label">01 → 02</span>
+        <div class="jump-body">
+          <b>Negociar la conexión con el cliente antes de prometer features.</b> La cerealera probablemente
+          no te abre la DB. Pedile vistas SQL específicas con los campos que el agente necesita, o que
+          te expongan endpoints REST. Definí el contrato de datos en escrito antes de codear.
+        </div>
+      </div>
+      <div class="jump">
+        <span class="jump-label">02 → 03</span>
+        <div class="jump-body">
+          <b>Refactorizar a connection pool por tenant.</b> Si no hiciste el campo <code>client_slug</code>
+          desde el día uno, este salto es doloroso. Implementá un middleware que resuelva el tenant
+          del request y lo inyecte en el contexto. Las tools pasan a recibirlo como dependency.
+        </div>
+      </div>
+    </div>
+
+    <div class="spartan-now">
+      <div class="eyebrow">› dónde está spartan hoy</div>
+      <h3>Cerealera: directo a fase 02 por restricción del cliente</h3>
+      <p>
+        Ya validaste con el cliente que no te abren la DB — te van a dar vistas parciales.
+        Eso significa que para la cerealera <strong>se saltean fase 01 y arrancan directo en fase 02</strong>.
+        Vale la pena empezar diseñando el repository pattern y los secretos en Secret Manager desde el primer día,
+        para no refactorizar después.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ TAB 2: AUTH Y OBSERVABILIDAD ============ -->
+  <section class="panel" id="auth">
+    <div class="eyebrow">Dimensión 02</div>
+    <h2>Auth y observabilidad</h2>
+    <p class="lead">
+      Quién puede ver qué, quién hizo qué, y cuándo te enterás de que algo falla.
+      Para clientes regulados (lab, clínica, salud) esta dimensión no es opcional — es la diferencia
+      entre tener producto vendible y no.
+    </p>
+
+    <div class="stages-grid">
+      <div class="stage" data-phase="0">
+        <div class="stage-head">
+          <span class="stage-num">FASE 00</span>
+          <span class="stage-tag">Explorar</span>
+        </div>
+        <div class="stage-title">Vos mismo, sin nada</div>
+        <div class="stage-body">
+          <p>Te logueás a claude.ai con tu cuenta personal. No hay nada que auditar excepto tu propio historial.</p>
+        </div>
+      </div>
+
+      <div class="stage" data-phase="1">
+        <div class="stage-head">
+          <span class="stage-num">FASE 01</span>
+          <span class="stage-tag">Conectar</span>
+        </div>
+        <div class="stage-title">Claude Desktop maneja la sesión</div>
+        <div class="stage-body">
+          <p>Vos y Alberto se conectan con sus cuentas de Anthropic. El MCP server confía en que quien se conecta es legítimo.</p>
+          <ul>
+            <li>Sin auth en el MCP server (no es necesario, corre local o en tu red)</li>
+            <li>Logs del MCP a archivo, mirás a mano</li>
+            <li>Sin métricas, sin alertas</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="stage" data-phase="2">
+        <div class="stage-head">
+          <span class="stage-num">FASE 02</span>
+          <span class="stage-tag">Operar</span>
+        </div>
+        <div class="stage-title">SSO + roles + logs estructurados</div>
+        <div class="stage-body">
+          <p>Cada usuario del cliente entra con su cuenta. Roles básicos para limitar qué puede hacer. Logs JSON que vos podés grepear y agregar a un dashboard.</p>
+          <ul>
+            <li>Auth con Laravel Sanctum, Google SSO, o Auth0</li>
+            <li>Roles: admin / user / viewer</li>
+            <li>Logs estructurados (JSON) con request_id</li>
+            <li>Dashboard de uso (Langfuse o propio)</li>
+            <li>Alertas básicas (mail si error rate &gt; 5%)</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="stage" data-phase="3">
+        <div class="stage-head">
+          <span class="stage-num">FASE 03</span>
+          <span class="stage-tag">Escalar</span>
+        </div>
+        <div class="stage-title">OIDC por tenant + tracing distribuido</div>
+        <div class="stage-body">
+          <p>Cada cliente puede traer su propio Identity Provider. Permisos finos por recurso. Tracing distribuido para debuggear flujos cross-service.</p>
+          <ul>
+            <li>OIDC / SAML — el cliente trae su Azure AD, Okta, etc.</li>
+            <li>Scopes finos (puede ver saldos pero no facturas)</li>
+            <li>Row-level security donde es posible</li>
+            <li>OpenTelemetry para tracing</li>
+            <li>SLA por cliente, alertas dirigidas según severidad y tenant</li>
+            <li>Retención de logs diferenciada por compliance del cliente</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="aspects">
+      <h3>› aspectos que cambian fase a fase</h3>
+      <table class="aspects-table">
+        <thead>
+          <tr><th>Aspecto</th><th>Fase 01</th><th>Fase 02</th><th>Fase 03</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Identidad del usuario</td>
+            <td data-phase="01">Cuenta Anthropic</td>
+            <td data-phase="02">SSO o user/pass propio</td>
+            <td data-phase="03">OIDC del tenant</td>
+          </tr>
+          <tr>
+            <td>Granularidad de permisos</td>
+            <td data-phase="01">Todo o nada</td>
+            <td data-phase="02">3 roles fijos</td>
+            <td data-phase="03">Scopes por recurso, custom por tenant</td>
+          </tr>
+          <tr>
+            <td>Log de auditoría</td>
+            <td data-phase="01">Archivo plano del MCP</td>
+            <td data-phase="02">Tabla <code>audit_log</code> con quién/qué/cuándo</td>
+            <td data-phase="03">Inmutable, append-only, retention configurable</td>
+          </tr>
+          <tr>
+            <td>Métricas operativas</td>
+            <td data-phase="01">A ojo</td>
+            <td data-phase="02">Dashboard con latencia, errores, costo</td>
+            <td data-phase="03">Por tenant, con percentiles y comparativas</td>
+          </tr>
+          <tr>
+            <td>Tracing</td>
+            <td data-phase="01">Print statements</td>
+            <td data-phase="02">request_id que correlaciona logs</td>
+            <td data-phase="03">OpenTelemetry, distributed tracing</td>
+          </tr>
+          <tr>
+            <td>Alertas</td>
+            <td data-phase="01">Si algo no responde, te avisa el cliente</td>
+            <td data-phase="02">Mail por error rate alto</td>
+            <td data-phase="03">PagerDuty, on-call, runbook por incidente</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 style="margin-top: 40px;">Próximos pasos al saltar de fase</h3>
+    <div class="jumps">
+      <div class="jump">
+        <span class="jump-label">01 → 02</span>
+        <div class="jump-body">
+          <b>Definir el modelo de auth antes de la UI.</b> Es más fácil agregar auth al backend
+          que retrofitearlo después. Decidir temprano: SSO con Google si el cliente es PyME,
+          Auth0 si tiene IT serio. Diseñar la tabla <code>audit_log</code> el día uno.
+        </div>
+      </div>
+      <div class="jump">
+        <span class="jump-label">02 → 03</span>
+        <div class="jump-body">
+          <b>OIDC y tracing en paralelo.</b> Ambos son trabajo grande y se hacen juntos porque
+          comparten infraestructura (request_id viaja con el token, los traces los hereda).
+          OpenTelemetry tiene curva de aprendizaje pero es el estándar.
+        </div>
+      </div>
+    </div>
+
+    <div class="spartan-now">
+      <div class="eyebrow">› dónde está spartan hoy</div>
+      <h3>Lab: fase 01 con plan de salto a fase 02 ya en marcha</h3>
+      <p>
+        Hoy el lab corre con MCP + Claude Desktop, sin auth formal. Eso es OK para la demo
+        pero <strong>para venderle al lab como producto, fase 02 con auth y audit_log es no negociable</strong>
+        — están regulados por ANMAT y necesitan trazabilidad. El plan razonable: SSO con Google Workspace
+        (que ya usan) + tabla de auditoría desde el primer release.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ TAB 3: RAG Y EMBEDDINGS ============ -->
+  <section class="panel" id="rag">
+    <div class="eyebrow">Dimensión 03</div>
+    <h2>RAG y embeddings</h2>
+    <p class="lead">
+      Cuando el cliente tiene conocimiento que no vive en bases SQL — manuales, protocolos,
+      historias clínicas, normativas — <abbr class="term" title="Retrieval-Augmented Generation — el agente busca documentos relevantes y los inyecta en el contexto antes de responder">RAG</abbr>
+      es la herramienta. Ya tenés inversión técnica (BGE-M3, pgvector) — esta dimensión es cómo evoluciona ese stack.
+    </p>
+
+    <div class="stages-grid">
+      <div class="stage" data-phase="0">
+        <div class="stage-head">
+          <span class="stage-num">FASE 00</span>
+          <span class="stage-tag">Explorar</span>
+        </div>
+        <div class="stage-title">Sin RAG, todo en el prompt</div>
+        <div class="stage-body">
+          <p>Pegás el documento en claude.ai y preguntás. Funciona para validar si tiene sentido, no escala.</p>
+        </div>
+      </div>
+
+      <div class="stage" data-phase="1">
+        <div class="stage-head">
+          <span class="stage-num">FASE 01</span>
+          <span class="stage-tag">Conectar</span>
+        </div>
+        <div class="stage-title">Probablemente sin RAG todavía</div>
+        <div class="stage-body">
+          <p>El MCP del lab hoy resuelve con queries SQL determinísticas, no necesita retrieval. RAG aparece cuando hay documentos no estructurados que el agente necesita consultar.</p>
+          <ul>
+            <li>Si hay PDFs / manuales, los embebés a mano y pegás chunks relevantes en el prompt</li>
+            <li>Para queries puramente sobre datos estructurados, no aplica</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="stage" data-phase="2">
+        <div class="stage-head">
+          <span class="stage-num">FASE 02</span>
+          <span class="stage-tag">Operar</span>
+        </div>
+        <div class="stage-title">pgvector + BGE-M3, retrieval básico</div>
+        <div class="stage-body">
+          <p>Stack que ya tenés para el lab. Embebés los documentos del cliente, retrieval por similitud coseno, top-k inyectado en el contexto.</p>
+          <ul>
+            <li>BGE-M3 como modelo de embeddings (multilingüe, 8K context)</li>
+            <li>pgvector para almacenamiento y búsqueda</li>
+            <li>Chunking de 500 tokens con overlap de 50</li>
+            <li>Top-k entre 4 y 8 con threshold de similitud</li>
+            <li>Re-indexar cuando el cliente actualiza documentos</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="stage" data-phase="3">
+        <div class="stage-head">
+          <span class="stage-num">FASE 03</span>
+          <span class="stage-tag">Escalar</span>
+        </div>
+        <div class="stage-title">Índices por tenant, re-ranking, evals</div>
+        <div class="stage-body">
+          <p>Cada cliente con su propio índice. Hybrid search (dense + sparse). Re-ranker liviano para los top-k. Evals continuas para medir si la calidad del retrieval baja.</p>
+          <ul>
+            <li>Schema multi-tenant en pgvector con namespace por cliente</li>
+            <li>Búsqueda híbrida: BGE-M3 + BM25</li>
+            <li>Re-ranking con BGE-reranker-base sobre los top-20</li>
+            <li>Cache de embeddings para queries frecuentes</li>
+            <li>Refresh incremental, no full re-index</li>
+            <li>Golden dataset con recall@5 y MRR por cliente</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="aspects">
+      <h3>› aspectos que cambian fase a fase</h3>
+      <table class="aspects-table">
+        <thead>
+          <tr><th>Aspecto</th><th>Fase 01</th><th>Fase 02</th><th>Fase 03</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Estrategia de retrieval</td>
+            <td data-phase="01">A mano o ninguna</td>
+            <td data-phase="02">Top-k denso con threshold</td>
+            <td data-phase="03">Híbrido + re-ranking</td>
+          </tr>
+          <tr>
+            <td>Modelo de embeddings</td>
+            <td data-phase="01">Variable o no aplica</td>
+            <td data-phase="02">BGE-M3 (mismo para todos)</td>
+            <td data-phase="03">Posible fine-tuning por dominio</td>
+          </tr>
+          <tr>
+            <td>Almacenamiento</td>
+            <td data-phase="01">Archivos sueltos</td>
+            <td data-phase="02">pgvector compartido</td>
+            <td data-phase="03">pgvector con namespace por tenant</td>
+          </tr>
+          <tr>
+            <td>Chunking</td>
+            <td data-phase="01">Improvisado</td>
+            <td data-phase="02">Tamaño fijo con overlap</td>
+            <td data-phase="03">Adaptativo por tipo de documento</td>
+          </tr>
+          <tr>
+            <td>Actualización del corpus</td>
+            <td data-phase="01">Manual al cambiar algo</td>
+            <td data-phase="02">Script de re-indexado periódico</td>
+            <td data-phase="03">Incremental, trigger por evento</td>
+          </tr>
+          <tr>
+            <td>Medición de calidad</td>
+            <td data-phase="01">"Parece que anda"</td>
+            <td data-phase="02">Golden dataset de 30-50 queries</td>
+            <td data-phase="03">Evals continuas, alertas por degradación</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 style="margin-top: 40px;">Próximos pasos al saltar de fase</h3>
+    <div class="jumps">
+      <div class="jump">
+        <span class="jump-label">01 → 02</span>
+        <div class="jump-body">
+          <b>Construir el corpus inicial.</b> Pedile al cliente los 50 documentos más consultados.
+          Embeberlos con BGE-M3, indexar en pgvector. Probar retrieval contra preguntas reales
+          antes de exponer al usuario. Definir el threshold con datos, no a ojo.
+        </div>
+      </div>
+      <div class="jump">
+        <span class="jump-label">02 → 03</span>
+        <div class="jump-body">
+          <b>Aislamiento + re-ranking.</b> Antes de aceptar el segundo cliente, separar índices
+          por tenant (namespace en pgvector). Agregar re-ranker para los casos donde top-k denso
+          trae ruido. Implementar golden dataset por cliente como gate de release.
+        </div>
+      </div>
+    </div>
+
+    <div class="spartan-now">
+      <div class="eyebrow">› dónde está spartan hoy</div>
+      <h3>Stack listo, faltan corpus por cliente</h3>
+      <p>
+        Tenés BGE-M3 + pgvector probado en el lab. La infraestructura técnica está en fase 02.
+        Lo que falta es el corpus específico por cliente — protocolos del lab, manuales de la cerealera,
+        contratos. <strong>El cuello de botella no es técnico, es el acceso a los documentos del cliente</strong>.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ TAB 4: CUMPLIMIENTO ============ -->
+  <section class="panel" id="compliance">
+    <div class="eyebrow">Dimensión 04</div>
+    <h2>Cumplimiento normativo y privacidad</h2>
+    <p class="lead">
+      Para tu mercado (lab, clínica, agro, municipios) esta dimensión es el diferencial comercial real.
+      Los competidores que no piensan en regulación quedan afuera de las licitaciones serias.
+      Ya tenés un pie adelantado con la capa de anonimización de Tomás.
+    </p>
+
+    <div class="stages-grid">
+      <div class="stage" data-phase="0">
+        <div class="stage-head">
+          <span class="stage-num">FASE 00</span>
+          <span class="stage-tag">Explorar</span>
+        </div>
+        <div class="stage-title">No aplica formalmente</div>
+        <div class="stage-body">
+          <p>Si estás trabajando con datos hipotéticos o anonimizados, no hay nada que cumplir. Pero ojo: si pegás datos reales del cliente en claude.ai, ya estás transfiriendo a un tercero — eso puede generar obligaciones bajo la normativa local, conviene revisarlo con un abogado.</p>
+        </div>
+      </div>
+
+      <div class="stage" data-phase="1">
+        <div class="stage-head">
+          <span class="stage-num">FASE 01</span>
+          <span class="stage-tag">Conectar</span>
+        </div>
+        <div class="stage-title">Vos sos el responsable de hecho</div>
+        <div class="stage-body">
+          <p>Los datos del cliente pasan por tu MCP server, que vive en tu GCP. Estás actuando como procesador de datos sin haber firmado un acuerdo formal.</p>
+          <ul>
+            <li>Ley 25.326 puede aplicar aunque no haya producto formal — revisar con asesoría legal</li>
+            <li>Si son datos de salud, ANMAT Disposición 64/2025 puede generar obligaciones regulatorias adicionales</li>
+            <li>Recomendado: convenio de confidencialidad con el cliente desde el inicio</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="stage" data-phase="2">
+        <div class="stage-head">
+          <span class="stage-num">FASE 02</span>
+          <span class="stage-tag">Operar</span>
+        </div>
+        <div class="stage-title">Anonimización, consentimiento, retención</div>
+        <div class="stage-body">
+          <p>Capa formal entre los datos del cliente y el LLM. Política de retención escrita. Mecanismo para que el usuario pida eliminación de sus datos.</p>
+          <ul>
+            <li>Anonimización antes de enviar al LLM (ya tenés capa de Tomás)</li>
+            <li>Consentimiento informado del usuario final</li>
+            <li>Retention policy: cuánto guardás los logs, prompts, respuestas</li>
+            <li>Derecho al olvido implementado (borrado real, no soft delete)</li>
+            <li>DPA (Data Processing Agreement) con el cliente</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="stage" data-phase="3">
+        <div class="stage-head">
+          <span class="stage-num">FASE 03</span>
+          <span class="stage-tag">Escalar</span>
+        </div>
+        <div class="stage-title">Certificaciones formales, residencia de datos</div>
+        <div class="stage-body">
+          <p>ISO 27001 / HIPAA / SOC2 según el mercado. Datos del cliente almacenados en la región que su regulación requiere. Auditorías externas periódicas.</p>
+          <ul>
+            <li>ISO 27001 para certificación general</li>
+            <li>HIPAA si exportás a US o atendés filiales norteamericanas</li>
+            <li>LGPD si Brasil entra al mix</li>
+            <li>Residencia de datos por región (Argentina, Brasil, US)</li>
+            <li>Auditoría externa anual + penetration testing</li>
+            <li>Cláusula contractual de SLA de seguridad</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="aspects">
+      <h3>› aspectos que cambian fase a fase</h3>
+      <table class="aspects-table">
+        <thead>
+          <tr><th>Aspecto</th><th>Fase 01</th><th>Fase 02</th><th>Fase 03</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Marco contractual</td>
+            <td data-phase="01">NDA informal o nada</td>
+            <td data-phase="02">DPA + términos de servicio</td>
+            <td data-phase="03">DPA + SLA seguridad + cláusulas compliance</td>
+          </tr>
+          <tr>
+            <td>Anonimización</td>
+            <td data-phase="01">Ninguna o manual</td>
+            <td data-phase="02">Capa automática antes del LLM</td>
+            <td data-phase="03">Tokenización reversible por tenant</td>
+          </tr>
+          <tr>
+            <td>Retención de datos</td>
+            <td data-phase="01">Indefinida, descuidada</td>
+            <td data-phase="02">Política escrita, ~90 días default</td>
+            <td data-phase="03">Configurable por tenant según regulación local</td>
+          </tr>
+          <tr>
+            <td>Derecho al olvido</td>
+            <td data-phase="01">No implementado</td>
+            <td data-phase="02">Endpoint de borrado del usuario</td>
+            <td data-phase="03">Workflow auditable con SLA de cumplimiento</td>
+          </tr>
+          <tr>
+            <td>Certificaciones</td>
+            <td data-phase="01">Ninguna</td>
+            <td data-phase="02">Compliance autodeclarado</td>
+            <td data-phase="03">ISO 27001 + sectoriales (HIPAA, etc.)</td>
+          </tr>
+          <tr>
+            <td>Residencia de datos</td>
+            <td data-phase="01">GCP región default</td>
+            <td data-phase="02">GCP sudamerica-este si el cliente lo pide</td>
+            <td data-phase="03">Por tenant, según regulación de su jurisdicción</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 style="margin-top: 40px;">Próximos pasos al saltar de fase</h3>
+    <div class="jumps">
+      <div class="jump">
+        <span class="jump-label">01 → 02</span>
+        <div class="jump-body">
+          <b>DPA firmado + capa de anonimización en producción.</b> Antes del primer release a un usuario
+          externo, asesoría legal (no Claude ni un chatbot) revisa el DPA. La capa de anonimización
+          de Tomás pasa de prototipo a feature versionada con tests. Definir retention policy por escrito.
+        </div>
+      </div>
+      <div class="jump">
+        <span class="jump-label">02 → 03</span>
+        <div class="jump-body">
+          <b>Camino largo a certificación.</b> ISO 27001 tarda 6-12 meses con un consultor.
+          No empezarlo antes de tener flujo de caja predecible. Para clientes que la piden
+          como gate, mientras tanto, presentar evidencias de controles equivalentes.
+        </div>
+      </div>
+    </div>
+
+    <div class="spartan-now">
+      <div class="eyebrow">› dónde está spartan hoy</div>
+      <h3>Capa técnica fase 02, marco legal pendiente</h3>
+      <p>
+        Tenés la capa de anonimización funcionando técnicamente — eso es 50% del trabajo.
+        Lo que <strong>todavía no está</strong>: DPA modelo para clientes, política de retención escrita,
+        consentimiento del usuario final. Para venderle al lab en producción, esto se hace antes del
+        primer release real. Un abogado especialista en datos personales en LATAM cuesta menos
+        que perder una licitación por no tener el papel.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ TAB 5: PRICING ============ -->
+  <section class="panel" id="pricing">
+    <div class="eyebrow">Dimensión 05</div>
+    <h2>Modelo comercial y pricing</h2>
+    <p class="lead">
+      Cómo cobrás determina si el producto tiene margen sostenible o si vas a perder plata escalando.
+      Para una empresa que vende IA, esta dimensión define el techo del negocio.
+      Subdesarrollada en la versión previa de este documento, ahora con detalle propio.
+    </p>
+
+    <div class="stages-grid">
+      <div class="stage" data-phase="0">
+        <div class="stage-head">
+          <span class="stage-num">FASE 00</span>
+          <span class="stage-tag">Explorar</span>
+        </div>
+        <div class="stage-title">No cobrás todavía</div>
+        <div class="stage-body">
+          <p>Estás validando, no vendiendo. La conversación de precios no aplica.</p>
+        </div>
+      </div>
+
+      <div class="stage" data-phase="1">
+        <div class="stage-head">
+          <span class="stage-num">FASE 01</span>
+          <span class="stage-tag">Conectar</span>
+        </div>
+        <div class="stage-title">Cobrás por horas o setup</div>
+        <div class="stage-body">
+          <p>Modelo de consultora: cobrás el armado del MCP server, capacitación al equipo, soporte por hora. El cliente paga su propia suscripción de Claude.</p>
+          <ul>
+            <li>Factura única por proyecto + horas de mantenimiento</li>
+            <li>No hay riesgo de pérdida por uso de tokens (vos no pagás el LLM)</li>
+            <li>Pero el ingreso es no recurrente</li>
+            <li>Difícil escalar: cada cliente nuevo = más horas humanas</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="stage" data-phase="2">
+        <div class="stage-head">
+          <span class="stage-num">FASE 02</span>
+          <span class="stage-tag">Operar</span>
+        </div>
+        <div class="stage-title">Fee mensual fijo, vos pagás el API</div>
+        <div class="stage-body">
+          <p>Cobrás una mensualidad al cliente que cubre uso esperado + margen. Vos absorbés el riesgo del costo de tokens. Si el uso explota, perdés plata; si está bien estimado, ganás.</p>
+          <ul>
+            <li>Ej: USD 800/mes flat para "hasta 3000 consultas mensuales"</li>
+            <li>Necesitás medición fina (ver app de economía de tokens)</li>
+            <li>Overages: por consulta arriba del límite, USD 0.10</li>
+            <li>Reset mensual o trimestral según contrato</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="stage" data-phase="3">
+        <div class="stage-head">
+          <span class="stage-num">FASE 03</span>
+          <span class="stage-tag">Escalar</span>
+        </div>
+        <div class="stage-title">Tiered SaaS con cuotas y overages</div>
+        <div class="stage-body">
+          <p>Planes Starter / Pro / Enterprise con cuotas claras, overage por uso, descuentos por volumen anual. Self-service de upgrade. El cliente entiende qué paga y por qué.</p>
+          <ul>
+            <li>Starter USD 300/mes: 1000 consultas, 1 usuario admin</li>
+            <li>Pro USD 1500/mes: 8000 consultas, 5 usuarios, SLA 99.5%</li>
+            <li>Enterprise: custom, SLA 99.9%, residencia de datos, soporte 24/7</li>
+            <li>Billing automatizado (Stripe, MercadoPago)</li>
+            <li>Dashboard para que el cliente vea su consumo en tiempo real</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="aspects">
+      <h3>› aspectos que cambian fase a fase</h3>
+      <table class="aspects-table">
+        <thead>
+          <tr><th>Aspecto</th><th>Fase 01</th><th>Fase 02</th><th>Fase 03</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Modelo de ingreso</td>
+            <td data-phase="01">Una vez + horas</td>
+            <td data-phase="02">Recurrente fijo</td>
+            <td data-phase="03">Tiered + overages</td>
+          </tr>
+          <tr>
+            <td>Quién paga el LLM</td>
+            <td data-phase="01">El cliente directamente a Anthropic</td>
+            <td data-phase="02">Vos, con margen incluido en el fee</td>
+            <td data-phase="03">Vos, costo por consulta calculado y exposto</td>
+          </tr>
+          <tr>
+            <td>Riesgo financiero del prestador</td>
+            <td data-phase="01">Bajo (no pagás tokens)</td>
+            <td data-phase="02">Alto (uso impredecible te puede romper el margen)</td>
+            <td data-phase="03">Controlado (cuotas duras, overages pagan exceso)</td>
+          </tr>
+          <tr>
+            <td>Predictibilidad para el cliente</td>
+            <td data-phase="01">Baja (factura variable)</td>
+            <td data-phase="02">Alta (sabe lo que paga cada mes)</td>
+            <td data-phase="03">Alta + flexibilidad de cambio de plan</td>
+          </tr>
+          <tr>
+            <td>Esfuerzo de cobranza</td>
+            <td data-phase="01">Manual, factura tradicional</td>
+            <td data-phase="02">Recurrente manual</td>
+            <td data-phase="03">Automatizado (Stripe / pasarela)</td>
+          </tr>
+          <tr>
+            <td>Métricas de salud del negocio</td>
+            <td data-phase="01">Facturación total</td>
+            <td data-phase="02">MRR + margen bruto por cliente</td>
+            <td data-phase="03">MRR, churn, NRR, LTV, CAC payback</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 style="margin-top: 40px;">Próximos pasos al saltar de fase</h3>
+    <div class="jumps">
+      <div class="jump">
+        <span class="jump-label">01 → 02</span>
+        <div class="jump-body">
+          <b>Calcular el costo real antes de poner precio.</b> Tomá una semana de uso típico del cliente
+          (con la app de economía de tokens) y proyectá costo mensual. Sumá margen 3-4x para cubrir picos
+          de uso, soporte y desarrollo. <b>Nunca cobres "lo que paga el cliente" sin haberlo medido.</b>
+          Pricing por debajo del costo es la forma más rápida de matar la empresa.
+        </div>
+      </div>
+      <div class="jump">
+        <span class="jump-label">02 → 03</span>
+        <div class="jump-body">
+          <b>Diseñar los planes en base a clientes reales, no en base a competencia.</b> Mirá tus 2-3
+          clientes actuales: cuántas consultas hacen, qué features usan, qué valor le sacan. De ahí salen
+          los tres planes. Implementar Stripe + dashboard del cliente lleva ~3 semanas si nunca lo hiciste.
+        </div>
+      </div>
+    </div>
+
+    <div class="spartan-now">
+      <div class="eyebrow">› dónde está spartan hoy</div>
+      <h3>Fase 01 con tensión hacia fase 02</h3>
+      <p>
+        Hoy facturás como consultora: setup + horas. Eso funcionó para arrancar pero <strong>limita el techo
+        del negocio</strong>. El próximo paso natural es pasar a fee mensual fijo con la cerealera o el lab,
+        ahora que ya tenés baseline de uso real. Para hacerlo bien, medir 4 semanas de uso con la app de
+        economía de tokens, calcular costo, sumar 3-4x de margen, y proponer el fee al cliente como
+        "previsibilidad para vos, recurrencia para nosotros".
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ TAB 6: TESTING Y EVALS ============ -->
+  <section class="panel" id="evals">
+    <div class="eyebrow">Dimensión 06</div>
+    <h2>Testing y evals</h2>
+    <p class="lead">
+      Cómo medís si el agente responde bien. Para sistemas no determinísticos como los LLM,
+      "parece que anda" no es evidencia válida — y mucho menos para un cliente regulado.
+      Esta dimensión define la diferencia entre un prototipo frágil y un producto vendible.
+    </p>
+
+    <div class="stages-grid">
+      <div class="stage" data-phase="0">
+        <div class="stage-head">
+          <span class="stage-num">FASE 00</span>
+          <span class="stage-tag">Explorar</span>
+        </div>
+        <div class="stage-title">Pruebo y veo</div>
+        <div class="stage-body">
+          <p>Hacés 5 consultas a mano y juzgás vos mismo si la respuesta tiene sentido. Suficiente para validar la idea.</p>
+        </div>
+      </div>
+
+      <div class="stage" data-phase="1">
+        <div class="stage-head">
+          <span class="stage-num">FASE 01</span>
+          <span class="stage-tag">Conectar</span>
+        </div>
+        <div class="stage-title">Test manuales del equipo</div>
+        <div class="stage-body">
+          <p>Alberto prueba consultas reales del lab y anota cuáles fallan. Sin proceso formal, pero hay observación.</p>
+          <ul>
+            <li>Documento de "casos que fallaron" en Notion o similar</li>
+            <li>Revisión semanal del documento</li>
+            <li>Sin métricas, sin baseline, sin regresión</li>
+            <li>Suficiente para uso interno, insuficiente para producción</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="stage" data-phase="2">
+        <div class="stage-head">
+          <span class="stage-num">FASE 02</span>
+          <span class="stage-tag">Operar</span>
+        </div>
+        <div class="stage-title">Golden dataset + evals en CI</div>
+        <div class="stage-body">
+          <p>Conjunto fijo de 50-100 queries con respuestas esperadas. Cada cambio de prompt, modelo o tool corre el set automáticamente. Si baja la calidad, no se mergea.</p>
+          <ul>
+            <li>Golden dataset en formato JSONL versionado en git</li>
+            <li>Evaluator: comparación textual + LLM-as-judge para casos abiertos</li>
+            <li>Métricas: accuracy, recall@k para RAG, tasa de tool calls correctos</li>
+            <li>Ejecución en CI antes de cada deploy</li>
+            <li>Threshold de calidad como gate (ej. accuracy &gt; 85%)</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="stage" data-phase="3">
+        <div class="stage-head">
+          <span class="stage-num">FASE 03</span>
+          <span class="stage-tag">Escalar</span>
+        </div>
+        <div class="stage-title">Evals continuas en producción + por tenant</div>
+        <div class="stage-body">
+          <p>Sample de tráfico real evaluado en background. Golden dataset por cliente para reflejar sus casos específicos. Alertas si la calidad drift en producción.</p>
+          <ul>
+            <li>Sample del 1-5% del tráfico real con eval async</li>
+            <li>Golden dataset distinto por tenant (cerealera ≠ lab)</li>
+            <li>A/B testing controlado entre versiones de prompt</li>
+            <li>Dashboard de calidad por cliente con alertas por degradación</li>
+            <li>Adversarial testing (red teaming) periódico</li>
+            <li>Para clientes regulados: trazabilidad de qué versión respondió cada query</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="aspects">
+      <h3>› aspectos que cambian fase a fase</h3>
+      <table class="aspects-table">
+        <thead>
+          <tr><th>Aspecto</th><th>Fase 01</th><th>Fase 02</th><th>Fase 03</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Volumen de casos de prueba</td>
+            <td data-phase="01">10-20 anecdóticos</td>
+            <td data-phase="02">50-100 estructurados</td>
+            <td data-phase="03">200+, por tenant, vivos</td>
+          </tr>
+          <tr>
+            <td>Frecuencia de evaluación</td>
+            <td data-phase="01">Cuando alguien se acuerda</td>
+            <td data-phase="02">Cada PR / deploy en CI</td>
+            <td data-phase="03">Continua sobre tráfico real</td>
+          </tr>
+          <tr>
+            <td>Tipo de juez</td>
+            <td data-phase="01">Humano (Alberto)</td>
+            <td data-phase="02">Comparación textual + LLM-as-judge</td>
+            <td data-phase="03">Multi-judge (LLM + reglas + humano spot-check)</td>
+          </tr>
+          <tr>
+            <td>Gate de release</td>
+            <td data-phase="01">"A mí me parece OK"</td>
+            <td data-phase="02">Threshold automático en CI</td>
+            <td data-phase="03">Multi-métrica + signoff manual para releases mayores</td>
+          </tr>
+          <tr>
+            <td>Detección de regresión</td>
+            <td data-phase="01">Cliente avisa</td>
+            <td data-phase="02">CI bloquea antes del deploy</td>
+            <td data-phase="03">Alertas en producción por drift</td>
+          </tr>
+          <tr>
+            <td>Trazabilidad para auditoría</td>
+            <td data-phase="01">Ninguna</td>
+            <td data-phase="02">Logs de eval por versión</td>
+            <td data-phase="03">Inmutable, por release, por tenant</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 style="margin-top: 40px;">Próximos pasos al saltar de fase</h3>
+    <div class="jumps">
+      <div class="jump">
+        <span class="jump-label">01 → 02</span>
+        <div class="jump-body">
+          <b>Construir el golden dataset con casos reales.</b> Tomá las 50 consultas más frecuentes
+          del cliente, anotá cuál es la respuesta correcta para cada una, guardalo en JSONL versionado.
+          Implementar el evaluator: comparación textual para casos cerrados, LLM-as-judge (con Claude
+          o el modelo más barato) para casos abiertos. Configurar como step de CI antes del deploy.
+        </div>
+      </div>
+      <div class="jump">
+        <span class="jump-label">02 → 03</span>
+        <div class="jump-body">
+          <b>Evals continuas + per-tenant.</b> Implementar sampling del tráfico real (1-5%) con eval
+          async usando workers en background. Por cada cliente, un golden dataset propio que refleje
+          sus casos. Definir métricas de drift y alertas. Para clientes regulados (lab), agregar
+          inmutabilidad criptográfica de los logs de eval.
+        </div>
+      </div>
+    </div>
+
+    <div class="spartan-now">
+      <div class="eyebrow">› dónde está spartan hoy</div>
+      <h3>Fase 01 — alto riesgo si el lab pasa a producción</h3>
+      <p>
+        Hoy las pruebas son manuales y depende del ojo de Alberto. <strong>Para venderle al lab
+        en producción, fase 02 es obligatorio</strong>. Sin evals automáticas, cualquier cambio
+        de prompt puede romper silenciosamente un caso crítico. Y bajo ANMAT, "no nos dimos cuenta"
+        no es defensa válida. Plan razonable: golden dataset de 50 casos del lab + evaluator simple +
+        gate en CI antes del primer release real.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ TAB 7: CHECKLIST 14 ============ -->
+  <section class="panel" id="checklist">
+    <div class="eyebrow">Catálogo completo</div>
+    <h2>Las 14 dimensiones del producto IA</h2>
+    <div class="check-intro">
+      <p class="lead">
+        Las seis dimensiones desarrolladas en las pestañas anteriores son las que más impacto tienen
+        para Spartan hoy. Esta es la lista completa de elementos que atraviesan transiciones por fase,
+        más un mapa de cómo dependen unas de otras.
+      </p>
+      <div class="check-legend">
+        <span class="lk"><span class="dot dot-here"></span>desarrollado en esta app</span>
+        <span class="lk"><span class="dot dot-other"></span>cubierto en otra app del taller</span>
+        <span class="lk"><span class="dot dot-future"></span>pendiente / referencia</span>
+      </div>
+    </div>
+
+    <div class="check-grid">
+      <!-- 1 -->
+      <div class="check-item">
+        <span class="check-num">01</span>
+        <div class="check-cat">› operacional</div>
+        <h4>Datos y conexión a base</h4>
+        <p>Cómo el agente accede a los datos del cliente: directo, vistas, réplica, API, multi-tenant.</p>
+        <span class="check-status here"><span class="dot dot-here"></span>desarrollado · pestaña 01</span>
+        <span class="check-priority">crítico</span>
+      </div>
+
+      <!-- 2 -->
+      <div class="check-item">
+        <span class="check-num">02</span>
+        <div class="check-cat">› operacional</div>
+        <h4>Autenticación y autorización</h4>
+        <p>Quién entra al agente, con qué credenciales, qué puede ver. Desde sin auth hasta OIDC por tenant.</p>
+        <span class="check-status here"><span class="dot dot-here"></span>desarrollado · pestaña 02</span>
+        <span class="check-priority">crítico</span>
+      </div>
+
+      <!-- 3 -->
+      <div class="check-item">
+        <span class="check-num">03</span>
+        <div class="check-cat">› operacional</div>
+        <h4>Observabilidad y logs</h4>
+        <p>Cómo te enterás de lo que pasa: a ojo, dashboard básico, tracing distribuido por tenant.</p>
+        <span class="check-status here"><span class="dot dot-here"></span>desarrollado · pestaña 02</span>
+        <span class="check-priority">crítico</span>
+      </div>
+
+      <!-- 4 -->
+      <div class="check-item">
+        <span class="check-num">04</span>
+        <div class="check-cat">› operacional</div>
+        <h4>Manejo de errores y resiliencia</h4>
+        <p>Qué pasa cuando algo falla: usuario reintenta, retry con backoff, circuit breaker con SLA.</p>
+        <span class="check-status future"><span class="dot dot-future"></span>referencia · sin app propia</span>
+        <span class="check-priority">medio</span>
+      </div>
+
+      <!-- 5 -->
+      <div class="check-item">
+        <span class="check-num">05</span>
+        <div class="check-cat">› conocimiento</div>
+        <h4>RAG y embeddings</h4>
+        <p>Cómo el agente accede a documentos no estructurados: sin RAG, pgvector simple, híbrido + re-ranking.</p>
+        <span class="check-status here"><span class="dot dot-here"></span>desarrollado · pestaña 03</span>
+        <span class="check-priority">crítico</span>
+      </div>
+
+      <!-- 6 -->
+      <div class="check-item">
+        <span class="check-num">06</span>
+        <div class="check-cat">› conocimiento</div>
+        <h4>Modelo de datos del cliente</h4>
+        <p>Cómo modelás el esquema del cliente: exploración cruda, repository pattern, contratos formales versionados.</p>
+        <span class="check-status future"><span class="dot dot-future"></span>referencia · sin app propia</span>
+        <span class="check-priority">medio</span>
+      </div>
+
+      <!-- 7 -->
+      <div class="check-item">
+        <span class="check-num">07</span>
+        <div class="check-cat">› negocio</div>
+        <h4>Modelo comercial y pricing</h4>
+        <p>Cómo cobrás: horas, fee fijo mensual, tiered SaaS con cuotas y overages.</p>
+        <span class="check-status here"><span class="dot dot-here"></span>desarrollado · pestaña 05</span>
+        <span class="check-priority">crítico</span>
+      </div>
+
+      <!-- 8 -->
+      <div class="check-item">
+        <span class="check-num">08</span>
+        <div class="check-cat">› negocio</div>
+        <h4>Onboarding del cliente</h4>
+        <p>Cómo arranca un cliente nuevo: vos hacés todo, checklist documentado, self-service con wizard.</p>
+        <span class="check-status future"><span class="dot dot-future"></span>referencia · sin app propia</span>
+        <span class="check-priority">medio</span>
+      </div>
+
+      <!-- 9 -->
+      <div class="check-item">
+        <span class="check-num">09</span>
+        <div class="check-cat">› negocio</div>
+        <h4>Soporte y mantenimiento</h4>
+        <p>Cómo atendés problemas: WhatsApp, email + tracker, portal con SLA y on-call.</p>
+        <span class="check-status future"><span class="dot dot-future"></span>referencia · sin app propia</span>
+        <span class="check-priority">bajo</span>
+      </div>
+
+      <!-- 10 -->
+      <div class="check-item">
+        <span class="check-num">10</span>
+        <div class="check-cat">› técnico interno</div>
+        <h4>Versionado de prompts y tools</h4>
+        <p>Cómo evolucionan el system prompt y las tools: archivo, tabla con versiones, A/B testing por tenant.</p>
+        <span class="check-status other"><span class="dot dot-other"></span>cubierto · app economía de tokens</span>
+        <span class="check-priority">medio</span>
+      </div>
+
+      <!-- 11 -->
+      <div class="check-item">
+        <span class="check-num">11</span>
+        <div class="check-cat">› técnico interno</div>
+        <h4>Testing y evals</h4>
+        <p>Cómo medís calidad: a mano, golden dataset en CI, evals continuas con alertas. Para regulados es no negociable.</p>
+        <span class="check-status here"><span class="dot dot-here"></span>desarrollado · pestaña 06</span>
+        <span class="check-priority">crítico</span>
+      </div>
+
+      <!-- 12 -->
+      <div class="check-item">
+        <span class="check-num">12</span>
+        <div class="check-cat">› técnico interno</div>
+        <h4>Deployment y CI/CD</h4>
+        <p>Cómo desplegás: manual, pipeline con GitHub Actions, blue/green con feature flags por tenant.</p>
+        <span class="check-status future"><span class="dot dot-future"></span>referencia · sin app propia</span>
+        <span class="check-priority">medio</span>
+      </div>
+
+      <!-- 13 -->
+      <div class="check-item">
+        <span class="check-num">13</span>
+        <div class="check-cat">› compliance</div>
+        <h4>Cumplimiento normativo y privacidad</h4>
+        <p>Marco legal, anonimización, consentimiento, certificaciones. Diferencial comercial real para tu mercado.</p>
+        <span class="check-status here"><span class="dot dot-here"></span>desarrollado · pestaña 04</span>
+        <span class="check-priority">crítico</span>
+      </div>
+
+      <!-- 14 -->
+      <div class="check-item">
+        <span class="check-num">14</span>
+        <div class="check-cat">› compliance</div>
+        <h4>Seguridad adversarial y guardrails</h4>
+        <p>Prompt injection, output sanitization, agencia acotada, human-in-the-loop para acciones irreversibles. OWASP Top 10 LLM.</p>
+        <span class="check-status future"><span class="dot dot-future"></span>pendiente · candidato a app dedicada</span>
+        <span class="check-priority">crítico</span>
+      </div>
+    </div>
+
+    <div style="margin-top: 36px; padding: 24px 28px; background: var(--surface-2); border-left: 3px solid var(--amber); border-radius: 0 3px 3px 0;">
+      <div class="eyebrow">› cómo usar este mapa</div>
+      <h3>No se aborda todo a la vez</h3>
+      <p style="margin-bottom: 0;">
+        Cuando llegue un cliente nuevo, mirá las 14 dimensiones y preguntate en qué fase
+        razonable está cada una para <strong>ese cliente específico</strong>. La cerealera probablemente
+        necesite fase 02 en datos/auth/observabilidad, pero quizás fase 01 alcance en RAG (queries SQL determinísticas).
+        El lab necesita fase 02 mínimo en compliance, pero puede arrancar con fase 01 en pricing.
+        Cada cliente tiene su propio vector de madurez. Sin un mapa entero, es fácil sobre-construir
+        en una dimensión y olvidar otra crítica.
+      </p>
+    </div>
+
+    <div class="dep-section">
+      <div class="eyebrow">› dependencias entre dimensiones</div>
+      <h3>Qué pide qué, qué habilita qué</h3>
+      <p>
+        Las dimensiones no son independientes. Algunas <b style="color: var(--danger)">requieren</b> que otras estén maduras
+        primero; otras <b style="color: var(--ok)">habilitan</b> que otras puedan avanzar. Saltar este orden lleva a refactorizar
+        después con más dolor.
+      </p>
+
+      <div class="dep-grid">
+        <div class="dep-node">
+          <div class="dep-head"><span class="dep-num">03</span><span class="dep-title">Observabilidad y logs</span></div>
+          <div class="dep-rel requires">
+            <span class="dep-arrow">requiere ←</span>
+            <span><b>Auth (02)</b> · sin identidad estable, los logs no son trazables a usuarios</span>
+          </div>
+          <div class="dep-rel enables">
+            <span class="dep-arrow">habilita →</span>
+            <span><b>Evals (11)</b> · sin métricas en producción no podés evaluar continuamente</span>
+          </div>
+          <div class="dep-rel enables">
+            <span class="dep-arrow">habilita →</span>
+            <span><b>Pricing (07)</b> · sin medir uso real no podés cobrar por consumo</span>
+          </div>
+        </div>
+
+        <div class="dep-node">
+          <div class="dep-head"><span class="dep-num">05</span><span class="dep-title">RAG y embeddings</span></div>
+          <div class="dep-rel requires">
+            <span class="dep-arrow">requiere ←</span>
+            <span><b>Datos (01)</b> · sin acceso a documentos del cliente no hay nada que indexar</span>
+          </div>
+          <div class="dep-rel requires">
+            <span class="dep-arrow">requiere ←</span>
+            <span><b>Datos (01) fase 03</b> · RAG multi-tenant exige aislamiento de datos primero</span>
+          </div>
+          <div class="dep-rel enables">
+            <span class="dep-arrow">habilita →</span>
+            <span><b>Evals (11)</b> · sin baseline de retrieval no se puede medir degradación</span>
+          </div>
+        </div>
+
+        <div class="dep-node">
+          <div class="dep-head"><span class="dep-num">07</span><span class="dep-title">Modelo comercial y pricing</span></div>
+          <div class="dep-rel requires">
+            <span class="dep-arrow">requiere ←</span>
+            <span><b>Observabilidad (03)</b> · sin medir uso real, el pricing es a ciegas</span>
+          </div>
+          <div class="dep-rel requires">
+            <span class="dep-arrow">requiere ←</span>
+            <span><b>Manejo de errores (04)</b> · cobrar SLA exige poder cumplirlo</span>
+          </div>
+          <div class="dep-rel enables">
+            <span class="dep-arrow">habilita →</span>
+            <span><b>Onboarding (08)</b> · sin planes claros no hay self-service</span>
+          </div>
+        </div>
+
+        <div class="dep-node">
+          <div class="dep-head"><span class="dep-num">11</span><span class="dep-title">Testing y evals</span></div>
+          <div class="dep-rel requires">
+            <span class="dep-arrow">requiere ←</span>
+            <span><b>Versionado prompts (10)</b> · sin versionado no podés comparar versiones</span>
+          </div>
+          <div class="dep-rel requires">
+            <span class="dep-arrow">requiere ←</span>
+            <span><b>Observabilidad (03)</b> · para evals continuas en producción</span>
+          </div>
+          <div class="dep-rel enables">
+            <span class="dep-arrow">habilita →</span>
+            <span><b>Compliance (13)</b> · evidencia auditable para regulados</span>
+          </div>
+        </div>
+
+        <div class="dep-node">
+          <div class="dep-head"><span class="dep-num">13</span><span class="dep-title">Cumplimiento normativo</span></div>
+          <div class="dep-rel requires">
+            <span class="dep-arrow">requiere ←</span>
+            <span><b>Auth (02)</b> · trazabilidad de quién accedió a qué dato</span>
+          </div>
+          <div class="dep-rel requires">
+            <span class="dep-arrow">requiere ←</span>
+            <span><b>Observabilidad (03)</b> · logs inmutables de auditoría</span>
+          </div>
+          <div class="dep-rel requires">
+            <span class="dep-arrow">requiere ←</span>
+            <span><b>Datos (01)</b> · aislamiento entre tenants es legal, no técnico</span>
+          </div>
+        </div>
+
+        <div class="dep-node">
+          <div class="dep-head"><span class="dep-num">14</span><span class="dep-title">Seguridad adversarial</span></div>
+          <div class="dep-rel requires">
+            <span class="dep-arrow">requiere ←</span>
+            <span><b>Auth (02)</b> · permisos finos para limitar agencia del modelo</span>
+          </div>
+          <div class="dep-rel requires">
+            <span class="dep-arrow">requiere ←</span>
+            <span><b>Observabilidad (03)</b> · detectar prompt injection requiere logs</span>
+          </div>
+          <div class="dep-rel enables">
+            <span class="dep-arrow">habilita →</span>
+            <span><b>Compliance (13)</b> · varios marcos lo exigen explícitamente</span>
+          </div>
+        </div>
+      </div>
+
+      <p style="margin-top: 24px; font-size: 13px; color: var(--text-3); max-width: 760px;">
+        <strong style="color: var(--amber)">Lectura clave:</strong> Auth (02) y Observabilidad (03) son
+        <i>dimensiones fundacionales</i> — bloquean el avance de varias otras. Vale la pena llevarlas
+        a fase 02 temprano aunque parezcan "infraestructura sin valor visible".
+      </p>
+    </div>
+  </section>
+</div>
+
+<footer>
+  <div class="container">
+    <span>spartan it · taller interno · dimensiones del producto IA · revisión jun-2026</span>
+    <span>parte del kit junto a <a class="link-out" href="economia-tokens.html">economía de tokens</a> y <a class="link-out" href="fases-mcp.html">las cuatro fases</a></span>
+  </div>
+  <div class="container" style="margin-top: 16px; opacity: 0.7; font-size: 10px;">
+    <span>contenido vigente al momento de la revisión · el stack de IA evoluciona rápido, validar recomendaciones específicas contra documentación oficial actual</span>
+  </div>
+</footer>
+
+<script>
+// ========== THEME TOGGLE ==========
+const THEME_KEY = 'spartan-dimensiones-theme';
+const root = document.documentElement;
+const toggle = document.getElementById('theme-toggle');
+
+function applyTheme(theme) {
+  root.setAttribute('data-theme', theme);
+  toggle.textContent = theme === 'dark' ? 'Modo claro' : 'Modo oscuro';
+}
+
+try {
+  const saved = localStorage.getItem(THEME_KEY);
+  if (saved) applyTheme(saved);
+} catch(e) {}
+
+toggle.addEventListener('click', () => {
+  const current = root.getAttribute('data-theme');
+  const next = current === 'dark' ? 'light' : 'dark';
+  applyTheme(next);
+  try { localStorage.setItem(THEME_KEY, next); } catch(e) {}
+});
+
+// ========== TABS ==========
+const tabs = document.querySelectorAll('.tab');
+const panels = document.querySelectorAll('.panel');
+tabs.forEach(t => t.addEventListener('click', () => {
+  tabs.forEach(x => x.classList.remove('active'));
+  panels.forEach(x => x.classList.remove('active'));
+  t.classList.add('active');
+  document.getElementById(t.dataset.panel).classList.add('active');
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}));
+</script>
+
+</body>
+</html>
